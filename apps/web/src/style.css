@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: all;
+}
+
+;
+
+@theme {
+  --font-pixel: "Chill Pixels Mono", "Pixel32", ui-sans-serif, system-ui;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-kai: "LXGW WenKai", "Kaiti SC", "KaiTi", "STKaiti", ui-serif, Georgia, serif;
+}
+
+body {
+  @apply bg-base-100 text-base-content font-sans antialiased;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.icon-btn {
+  @apply bg-transparent text-base text-base-content border-none border-base-content/20 rounded-full p-0 cursor-pointer transition-all duration-200 inline-flex items-center justify-center;
+}
+
+.icon-btn-hidden {
+  @apply bg-transparent text-base text-base-content border-none border-base-content/20 rounded-full p-0 cursor-pointer transition-all duration-200 items-center justify-center;
+}
+
+.icon-btn:hover,
+.icon-btn-hidden:hover {
+  @apply -m-2 p-2 bg-base-content/20;
+}
+
+.btn-text {
+  @apply bg-transparent p-0 border-0 shadow-none;
+}
+
+.font-pixel {
+  font-family: "Chill Pixels Mono", "Pixel32", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  ;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-base-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-base-300 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-content/20;
+}
+
+#app {
+  height: 100vh;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="night"], [data-theme="cmyk"], [data-theme="corporate"], [data-theme="synthwave"], [data-theme="cyberpunk"], [data-theme="valentine"], [data-theme="halloween"], [data-theme="garden"], [data-theme="forest"], [data-theme="aqua"], [data-theme="lofi"], [data-theme="pastel"], [data-theme="fantasy"], [data-theme="wireframe"], [data-theme="black"], [data-theme="luxury"], [data-theme="dracula"]));
+
+/* ============================================================
+   设计系统基础层：微边框 / 同心圆角 / 聚焦态 / 表单间距
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* 0.5px 精细微边框（半透明等价配方） */
+    --hairline: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+    --hairline-strong: color-mix(in oklab, var(--color-base-content) 16%, transparent);
+    /* 柔和分层投影 */
+    --shadow-card: 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+    --shadow-popover: 0 6px 16px -4px rgba(15, 23, 42, 0.10), 0 2px 6px -2px rgba(15, 23, 42, 0.06);
+    --shadow-dialog: 0 20px 40px -12px rgba(15, 23, 42, 0.18), 0 8px 16px -8px rgba(15, 23, 42, 0.10);
+  }
+
+  /* 全局聚焦：统一柔光圈，取代生硬边框（daisyUI 焦点环另由未分层规则接管） */
+}
+
+@layer components {
+
+  /* 精细微边框工具类 */
+  .hairline {
+    border: 1px solid var(--hairline);
+  }
+
+  .hairline-b {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  /* 标准业务面板：0.5px 边框 + 柔和阴影 + 12px 圆角 */
+  .panel {
+    border: 1px solid var(--hairline);
+    border-radius: 0.75rem;
+    /* 12px，业务卡片标准 */
+    background: var(--color-base-100);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* 内嵌子模块：同心圆角（外层 12px - 内边距 12px ≈ 平直/微圆角） */
+  .panel-inset {
+    border: 1px solid var(--hairline);
+    border-radius: 0.375rem;
+    /* 6px */
+    background: color-mix(in oklab, var(--color-base-content) 3%, var(--color-base-100));
+  }
+
+  /* 表单字段：标签在上、控件、错误提示在下，留足呼吸空间 */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    /* 6px */
+  }
+
+  .field>.label {
+    font-size: 0.75rem;
+    /* 12px */
+    font-weight: 500;
+    line-height: 1rem;
+    color: color-mix(in oklab, var(--color-base-content) 62%, transparent);
+  }
+
+  /* 横向字段：左侧标签 + 右侧控件强制同一行，错误/提示整行下挂 */
+  .field-row {
+    display: flex;
+    flex-direction: row;
+    /* 与 .field 同挂时强制恢复横排，避免 flex-basis 作用于纵轴拉高控件 */
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.75rem;
+    /* 6px 12px */
+  }
+
+  .field-row>.label {
+    flex: 0 0 auto;
+    min-width: 4.5em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1rem;
+    color: color-mix(in oklab, var(--color-base-content) 62%, transparent);
+    white-space: nowrap;
+  }
+
+  .field-row> :is(.input, .select, .textarea),
+  .field-row> :is(.el-input, .el-select),
+  .field-row>div:has(:is(.input, .select, .textarea)) {
+    flex: 1 1 10rem;
+    min-width: 0;
+  }
+
+  .field-row>.field-error,
+  .field-row>.field-hint {
+    flex-basis: 100%;
+  }
+
+  .field-error {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: color-mix(in oklab, var(--color-error) 90%, transparent);
+  }
+
+  .field-hint {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: color-mix(in oklab, var(--color-base-content) 45%, transparent);
+  }
+
+  /* 悬浮菜单/下拉面板统一弹出观感（dropdown、menu 内部项） */
+  .dropdown-content,
+  .ul-menu-pop {
+    box-shadow: var(--shadow-popover);
+    border: 1px solid var(--hairline);
+    border-radius: 0.75rem;
+  }
+
+  .dropdown-content .menu :where(li:not(.menu-title))> :where(a, button):hover,
+  .dropdown-content .menu :where(li:not(.menu-title))>.active {
+    border-radius: 0.5rem;
+  }
+
+  /* 按钮：统一 8px 圆角、中等字重、光学居中 */
+  .btn {
+    border-radius: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .btn-sm {
+    border-radius: 0.4375rem;
+  }
+
+  /* 分隔线 */
+  .divider-subtle {
+    height: 1px;
+    background: var(--hairline);
+  }
+}
+
+/* ============================================================
+   Element Plus 主题桥接：控件跟随应用主题（颜色/圆角/字体）
+   ============================================================ */
+:root {
+  --el-color-primary: var(--color-primary);
+  --el-color-primary-light-3: color-mix(in oklab, var(--color-primary) 70%, var(--color-base-100));
+  --el-color-primary-light-5: color-mix(in oklab, var(--color-primary) 50%, var(--color-base-100));
+  --el-color-primary-light-7: color-mix(in oklab, var(--color-primary) 30%, var(--color-base-100));
+  --el-color-primary-light-8: color-mix(in oklab, var(--color-primary) 20%, var(--color-base-100));
+  --el-color-primary-light-9: color-mix(in oklab, var(--color-primary) 10%, var(--color-base-100));
+  --el-color-danger: var(--color-error);
+  --el-border-radius-base: 0.5rem;
+  --el-border-color: color-mix(in oklab, var(--color-base-content) 16%, transparent);
+  --el-border-color-light: color-mix(in oklab, var(--color-base-content) 16%, transparent);
+  --el-border-color-hover: color-mix(in oklab, var(--color-primary) 55%, transparent);
+  --el-fill-color-blank: var(--color-base-100);
+  --el-bg-color: var(--color-base-100);
+  --el-bg-color-overlay: var(--color-base-100);
+  --el-text-color-regular: var(--color-base-content);
+  --el-text-color-primary: var(--color-base-content);
+  --el-text-color-secondary: color-mix(in oklab, var(--color-base-content) 55%, transparent);
+  --el-font-size-base: 0.875rem;
+  --el-box-shadow-light: var(--shadow-popover);
+}
+
+/* EP 控件细节：统一高度/字号、弹层观感 */
+.el-input__wrapper,
+.el-textarea__inner {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  transition: box-shadow 0.15s ease;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset, 0 0 0 3px color-mix(in oklab, var(--el-color-primary) 16%, transparent);
+}
+
+.el-select__wrapper {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  transition: box-shadow 0.15s ease;
+}
+
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset, 0 0 0 3px color-mix(in oklab, var(--el-color-primary) 16%, transparent) !important;
+}
+
+.el-popper.is-light {
+  border: 1px solid var(--hairline) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: var(--shadow-popover) !important;
+}
+
+/* 残留 daisyUI 原生控件（聊天输入/搜索等）：轻度精修，不强制尺寸 */
+.input,
+.textarea,
+.select {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus-visible,
+.textarea:focus-visible,
+.select:focus-visible {
+  outline: none !important;
+  border-color: color-mix(in oklab, var(--color-primary) 55%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 16%, transparent);
+}

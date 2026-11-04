@@ -1,0 +1,35 @@
+{
+  "name": "@yige/server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "弈阁服务端：HTTP API、WebSocket、账号与战绩",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node -r ts-node/register -r tsconfig-paths/register ./src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@yige/engine": "0.1.0",
+    "bcryptjs": "^2.4.3",
+    "cookie": "^0.7.2",
+    "cookie-parser": "^1.4.7",
+    "cookie-signature": "^1.2.2",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "glob": "^11.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.1",
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "cross-env": "^7.0.3",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.3"
+  }
+}

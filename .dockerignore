@@ -1,0 +1,27 @@
+# 依赖与产物（构建阶段会重新生成）
+node_modules
+**/node_modules
+apps/*/dist
+packages/*/dist
+
+# 运行期数据（服务器用 volume 挂载）
+apps/server/data
+data
+*.sqlite
+*.sqlite-journal
+*.log
+
+# 仓库与本地环境文件
+.git
+.gitignore
+.workbuddy
+.impeccable
+**/.impeccable
+.vscode
+.idea
+**/.DS_Store
+cookies*.txt
+prompt.txt
+deploy/.env
+.env
+.env.*

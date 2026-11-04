@@ -1,0 +1,34 @@
+# 依赖与构建产物
+node_modules
+dist
+
+# 运行时数据与日志
+data
+*.log
+sessions
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# 敏感文件（会话凭据、环境变量、部署密钥）
+cookies.txt
+*.cookies.txt
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+deploy/.env
+
+# AI/工具临时目录
+.tmp
+.tmp-ep
+.workbuddy/
+.impeccable/
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
